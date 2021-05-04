@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+}
+
+#root {
+    width: 100%;
+}
+
+#header {
+    background-color: black;
+    padding: 16px 32px;
+    margin: 0;
+    font-size: 1.5em;
+    color: white;
+}
+
+#wrapper {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 16px 0px;
+}
+
+#canvas {
+    width: 100%;
+    height: auto;
+    max-width: 640px;
+    margin: 0;
+    padding: 0;
+    aspect-ratio: calc(16/9);
+}
+
+#mimimmi-text-header {
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+#mimimmi-text {
+    width: 100%;
+    margin: 8px 0px;
+    padding: 8px;
+}
+
+#output-img {
+    width: 50%;
+    display: block;
+    margin: auto;
+}
