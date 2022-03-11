@@ -1,26 +1,40 @@
-plugins {
-    kotlin("js") version "1.4.32"
-}
+import org.jetbrains.compose.compose
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
 
-group = "net.aridai"
-version = "1.0.0"
+plugins {
+    kotlin("multiplatform")
+    id("org.jetbrains.compose")
+}
 
 repositories {
     mavenCentral()
-}
-
-dependencies {
-    //  https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core-js
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.4.3")
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    google()
 }
 
 kotlin {
-    js(LEGACY) {
+    js(IR) {
+        browser()
         binaries.executable()
-        browser {
-            commonWebpackConfig {
-                cssSupport.enabled = true
+    }
+    sourceSets {
+        val jsMain by getting {
+            kotlin.srcDir("src/main/kotlin")
+            resources.srcDir("src/main/resources")
+
+            dependencies {
+                implementation(compose.web.core)
+                implementation(compose.runtime)
             }
         }
+    }
+}
+
+// a temporary workaround for a bug in jsRun invocation - see https://youtrack.jetbrains.com/issue/KT-48273
+afterEvaluate {
+    rootProject.extensions.configure<NodeJsRootExtension> {
+        nodeVersion = "16.0.0"
+        versions.webpackDevServer.version = "4.0.0"
+        versions.webpackCli.version = "4.9.0"
     }
 }
